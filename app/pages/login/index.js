@@ -23,9 +23,9 @@ export default function LoginScreen() {
             <StatusBar backgroundColor="#393939" barStyle="light-content" />
             <View style={Styles.mainContainer}>
                 <Text style={Styles.title}>Login</Text>
-                <InputBox label={"Email"} value={email} onChangeText={setEmail}></InputBox>
+                <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark"></InputBox>
                 <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword}></InputBox>
-                <CustomButton onPress={handleSignIn}>Login</CustomButton>
+                <CustomButton onPress={handleSignIn} theme="dark">Login</CustomButton>
             </View>
 
         </SafeAreaView>

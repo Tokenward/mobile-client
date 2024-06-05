@@ -1,11 +1,3 @@
-/**
- * Project: Tokenward Mobile-Client
- * File: /config/firebase.js
- * Description: Configuration for the Firebase authentication + database
- * Author: Mitja Kurath
- * Date: [2024-05-06]
- */
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -18,9 +10,9 @@ const firebaseConfig = {
     projectId: Constants.expoConfig.extra.projectId,
     storageBucket: Constants.expoConfig.extra.storageBucket,
     messagingSenderId: Constants.expoConfig.extra.messagingSenderId,
-    appId: Constants.expoConfig.extra.messagingSenderId,
-    databaseURL: Constants.expoConfig.extra.databaseURL
-  };
+    appId: Constants.expoConfig.extra.appId,
+    measurementId: Constants.expoConfig.extra.measurementId
+};
  
 initializeApp(firebaseConfig);
 export const auth = getAuth();

@@ -1,16 +1,22 @@
-import { View, StyleSheet, TextInput, Text } from "react-native"
+import React from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+import CustomColors from "../CustomColors";
+import { getOsTheme } from "../lib/util/theme";
 
 export default function InputBox({ label, hidden = false }) {
+    const theme = getOsTheme();
+    const colors = CustomColors[theme];
+
     return (
-        <View style={styles.container}> 
+        <View style={[styles.container]}> 
             <TextInput 
-                style={styles.input}
-                placeholder={label} 
+                style={[styles.input, { backgroundColor: colors.surface, color: colors.onSurface }]}
+                placeholder={label}
+                placeholderTextColor={colors.onSurface} 
                 secureTextEntry={hidden}
-            ></TextInput>
-            
+            />
         </View> 
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -26,8 +32,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: "white",
-        color: "black",
         alignSelf: "center",
     },
-}) 
+});

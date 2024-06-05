@@ -1,11 +1,17 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native"
+import React from "react";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import CustomColors from "../CustomColors";
+import { getOsTheme } from "../lib/util/theme";
 
 export default function CustomButton({ children, onPress }) {
+    const theme = getOsTheme();
+    const colors = CustomColors[theme];
+
     return (
-        <TouchableOpacity onPress={onPress} style={styles.button}> 
-            <Text style={styles.buttonText}>{children}</Text> 
+        <TouchableOpacity onPress={onPress} style={[styles.button, { backgroundColor: colors.primary }]}> 
+            <Text style={[styles.buttonText, { color: colors.onPrimary }]}>{children}</Text> 
         </TouchableOpacity> 
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -17,15 +23,12 @@ const styles = StyleSheet.create({
         fontSize: 24,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: "#456EF6",
-        color: "black",
         alignSelf: "center",
     },
     buttonText: {
         fontSize: 20,
-        color: "white",
         textAlign: "center",
         fontWeight: "bold",
         fontFamily: "roboto",
     },
-})
+});
