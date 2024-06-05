@@ -18,9 +18,9 @@ const firebaseConfig = {
     projectId: Constants.expoConfig.extra.projectId,
     storageBucket: Constants.expoConfig.extra.storageBucket,
     messagingSenderId: Constants.expoConfig.extra.messagingSenderId,
-    appId: Constants.expoConfig.extra.appId,
-    measurementId: Constants.expoConfig.extra.measurementId
-};
+    appId: Constants.expoConfig.extra.messagingSenderId,
+    databaseURL: Constants.expoConfig.extra.databaseURL
+  };
  
 initializeApp(firebaseConfig);
 export const auth = getAuth();

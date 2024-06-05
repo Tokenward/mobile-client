@@ -3,6 +3,7 @@ import InputBox from "../../../components/InputBox";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import CustomButton from "../../../components/CustomButton";
+import { auth } from "../../../config/firebase";
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
