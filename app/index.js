@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 
+
 export default function HomeScreen() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -25,6 +26,6 @@ export default function HomeScreen() {
     if (isLoggedIn) {
         return <Redirect href="/vault" />;
     } else {
-        return <Redirect href="../pages/login" />;
+        return <Redirect href="/pages/authentification/" />;
     }
 }

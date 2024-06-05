@@ -3,6 +3,10 @@ import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
 import CustomButton from "../../../components/CustomButton";
+import { Stack } from "expo-router";
+import { Link } from "expo-router";
+import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function RegisterScreen() {
     const [email, setEmail] = useState('');
@@ -20,12 +24,13 @@ export default function RegisterScreen() {
 
     return (
       <SafeAreaView style={Styles.mainContainer}>
+        <Stack.Screen options={{ title: "SignUp"}} />
           <StatusBar backgroundColor="#393939" barStyle="light-content" />
           <View style={Styles.mainContainer}>
               <Text style={Styles.title}>SignUp</Text>
-              <InputBox label={"Email"} value={email} onChangeText={setEmail}></InputBox>
+              <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark"></InputBox>
               <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword}></InputBox>
-              <CustomButton onPress={handleSignUp}>SignUp</CustomButton>
+              <CustomButton onPress={handleSignUp} theme="dark">SignUp</CustomButton>
           </View>
 
       </SafeAreaView>
