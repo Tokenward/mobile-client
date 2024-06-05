@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import InputBox from "../../../components/InputBox";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import CustomButton from "../../../components/CustomButton";
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
@@ -23,6 +24,7 @@ export default function LoginScreen() {
                 <Text style={Styles.title}>Login</Text>
                 <InputBox label={"Password"} hidden={true}></InputBox>
                 <InputBox label={"Email"}></InputBox>
+                <CustomButton>Login</CustomButton>
             </View>
 
         </SafeAreaView>
