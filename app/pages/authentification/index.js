@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, StatusBar } from "react-native";
+import { View, Text, SafeAreaView, StyleSheet, StatusBar, Alert } from "react-native";
 import InputBox from "../../../components/InputBox";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -24,11 +24,12 @@ export default function LoginScreen() {
             Alert.alert('Login error', 'Email and password must not be empty');
         }
     };
+
     return (
-        <SafeAreaView style={Styles.mainContainer}>
+        <SafeAreaView style={styles.mainContainer}>
             <Stack.Screen 
                 options={{
-                    title: "Login" ,
+                    title: "Login",
                     headerStyle: {
                         backgroundColor: "#393939",
                     },
@@ -36,29 +37,41 @@ export default function LoginScreen() {
                 }} 
             />
             <StatusBar backgroundColor="#393939" barStyle="light-content" />
-            <View style={Styles.mainContainer}>
-                <Text style={Styles.title}>Login</Text>
-                <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark"></InputBox>
-                <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword}></InputBox>
+            <View style={styles.mainContainer}>
+                <Text style={styles.title}>Login</Text>
+                <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark" />
+                <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword} />
                 <CustomButton onPress={onHandleLogin} theme="dark">Login</CustomButton>
-                <Link href="./signup">SignUp</Link>
-
+                <View style={styles.linkContainer}>
+                    <Link href="./signup" style={styles.link}>Sign Up</Link>
+                </View>
             </View>
         </SafeAreaView>
-    )
+    );
 }
-const Styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
     mainContainer: {
-        backgroundColor: "#393939",
-        height: "100%",
+        backgroundColor: "#1f1f1f",
+        flex: 1,
+        justifyContent: "center",
+        paddingHorizontal: 20,
     },
     title: {
-        fontSize: 30,
-        color: "white",
+        fontSize: 32,
+        color: "#ffffff",
         textAlign: "center",
-        marginTop: 48,
+        marginBottom: 48,
         fontWeight: "bold",
-        fontFamily: "roboto",
+        fontFamily: "Roboto",
     },
-
-})
+    linkContainer: {
+        marginTop: 16,
+        alignItems: 'center',
+    },
+    link: {
+        color: "#1e90ff",
+        textAlign: "center",
+        fontSize: 16,
+    },
+});

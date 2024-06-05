@@ -8,7 +8,7 @@ export default function InputBox({ label, hidden = false, value, onChangeText })
     const colors = CustomColors[theme];
 
     return (
-        <View style={[styles.container]}> 
+        <View style={styles.container}> 
             <TextInput 
                 style={[styles.input, { backgroundColor: colors.surface, color: colors.onSurface }]}
                 placeholder={label}
@@ -23,15 +23,16 @@ export default function InputBox({ label, hidden = false, value, onChangeText })
 
 const styles = StyleSheet.create({
     container: { 
-        width: "auto", 
-        marginBottom: 15 
+        width: "100%", 
+        marginBottom: 15,
+        alignItems: "center",
     },
     input: {
         height: 48,
-        width: "65%",
+        width: "100%",
         marginTop: 5,
         marginBottom: 5,
-        fontSize: 15,
+        fontSize: 16,
         borderRadius: 10,
         padding: 10,
         alignSelf: "center",

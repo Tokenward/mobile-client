@@ -1,29 +1,34 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
 import CustomButton from "../../../components/CustomButton";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { auth } from "../../../config/firebase";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null);
+  const router = useRouter();
 
-  const handleSignUp = async () => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      setUser(userCredential.user);
-    } catch (error) {
-      console.error(error);
+  const handleSignUp = () => {
+    if (email !== '' && password !== "") {
+      console.log("Registering with Email and Password");
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          router.push('/vault');
+        })
+        .catch((err) => Alert.alert('Signup error', err.message));
+    } else {
+      Alert.alert('Signup error', 'Email and password must not be empty');
     }
   };
 
   return (
-    <SafeAreaView style={Styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       <Stack.Screen
         options={{
           title: "Register",
@@ -34,28 +39,41 @@ export default function RegisterScreen() {
         }}
       />
       <StatusBar backgroundColor="#393939" barStyle="light-content" />
-      <View style={Styles.mainContainer}>
-        <Text style={Styles.title}>Register</Text>
-        <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark"></InputBox>
-        <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword}></InputBox>
-        <CustomButton onPress={handleSignUp} theme="dark">SignUp</CustomButton>
+      <View style={styles.mainContainer}>
+        <Text style={styles.title}>Register</Text>
+        <InputBox label={"Email"} value={email} onChangeText={setEmail} />
+        <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword} />
+        <CustomButton onPress={handleSignUp}>Register</CustomButton>
+        <View style={styles.linkContainer}>
+          <Link href="./login" style={styles.link}>Login</Link>
+        </View>
       </View>
-
     </SafeAreaView>
-  )
+  );
 }
-const Styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: "#393939",
-    height: "100%",
+    backgroundColor: "#1f1f1f",
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 30,
-    color: "white",
+    fontSize: 32,
+    color: "#ffffff",
     textAlign: "center",
-    marginTop: 48,
+    marginBottom: 48,
     fontWeight: "bold",
-    fontFamily: "roboto",
+    fontFamily: "Roboto",
   },
-
-})
+  linkContainer: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  link: {
+    color: "#1e90ff",
+    textAlign: "center",
+    fontSize: 16,
+  },
+});

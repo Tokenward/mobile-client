@@ -17,18 +17,18 @@ export default function CustomButton({ children, onPress }) {
 const styles = StyleSheet.create({
     button: {
         height: 48,
-        width: "65%",
-        marginTop: 5,
-        marginBottom: 5,
-        fontSize: 24,
+        width: "100%",
+        marginTop: 10,
+        marginBottom: 10,
         borderRadius: 10,
-        padding: 10,
+        justifyContent: "center",
+        alignItems: "center",
         alignSelf: "center",
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: 18,
         textAlign: "center",
         fontWeight: "bold",
-        fontFamily: "roboto",
+        fontFamily: "Roboto",
     },
 });
