@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput } from "react-native";
 import CustomColors from "../CustomColors";
 import { getOsTheme } from "../lib/util/theme";
 
-export default function InputBox({ label, hidden = false }) {
+export default function InputBox({ label, hidden = false, value, onChangeText }) {
     const theme = getOsTheme();
     const colors = CustomColors[theme];
 
@@ -14,6 +14,8 @@ export default function InputBox({ label, hidden = false }) {
                 placeholder={label}
                 placeholderTextColor={colors.onSurface} 
                 secureTextEntry={hidden}
+                value={value}
+                onChangeText={onChangeText}
             />
         </View> 
     );

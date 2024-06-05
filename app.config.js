@@ -1,10 +1,11 @@
-import "dotenv/config"
-
+import 'dotenv/config';
+ 
+ 
 export default {
   "expo": {
-    "scheme": "acme",
-    "name": "mobile-client",
-    "slug": "mobile-client",
+    "scheme": "amce",
+    "name": "ChatApp",
+    "slug": "ChatApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -33,9 +34,6 @@ export default {
       storageBucket: process.env.STORAGE_BUCKET,
       messagingSenderId: process.env.MESSAGING_SENDER_ID,
       appId: process.env.APP_ID
-    },
-    "plugins": [
-      "expo-router"
-    ]
+    }
   }
 }
