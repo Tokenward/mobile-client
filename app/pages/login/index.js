@@ -1,7 +1,21 @@
 import { View, Text, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import InputBox from "../../../components/InputBox";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function LoginScreen() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [user, setUser] = useState(null);
+
+    const handleSignIn = async () => {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            setUser(userCredential.user);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
         <SafeAreaView style={Styles.mainContainer}>
             <StatusBar backgroundColor="#393939" barStyle="light-content" />
