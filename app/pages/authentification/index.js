@@ -17,7 +17,7 @@ export default function LoginScreen() {
             console.log("Signing in with Email and Password");
             signInWithEmailAndPassword(auth, email, password)
                 .then(() => {
-                    router.push('/vault'); 
+                    router.push('/vault');
                 })
                 .catch((err) => Alert.alert('Login error', err.message));
         } else {
@@ -26,7 +26,15 @@ export default function LoginScreen() {
     };
     return (
         <SafeAreaView style={Styles.mainContainer}>
-            <Stack.Screen options={{ title: "Login"}} />
+            <Stack.Screen 
+                options={{
+                    title: "Login" ,
+                    headerStyle: {
+                        backgroundColor: "#393939",
+                    },
+                    headerTintColor: "#fff"
+                }} 
+            />
             <StatusBar backgroundColor="#393939" barStyle="light-content" />
             <View style={Styles.mainContainer}>
                 <Text style={Styles.title}>Login</Text>
@@ -41,7 +49,7 @@ export default function LoginScreen() {
 }
 const Styles = StyleSheet.create({
     mainContainer: {
-        backgroundColor:"#393939",
+        backgroundColor: "#393939",
         height: "100%",
     },
     title: {
