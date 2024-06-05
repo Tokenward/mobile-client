@@ -22,9 +22,9 @@ export default function LoginScreen() {
             <StatusBar backgroundColor="#393939" barStyle="light-content" />
             <View style={Styles.mainContainer}>
                 <Text style={Styles.title}>Login</Text>
-                <InputBox label={"Password"} hidden={true}></InputBox>
-                <InputBox label={"Email"}></InputBox>
-                <CustomButton>Login</CustomButton>
+                <InputBox label={"Email"} value={email} onChangeText={setEmail}></InputBox>
+                <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword}></InputBox>
+                <CustomButton onPress={handleSignIn}>Login</CustomButton>
             </View>
 
         </SafeAreaView>
