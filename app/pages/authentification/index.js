@@ -4,22 +4,26 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import CustomButton from "../../../components/CustomButton";
 import { auth } from "../../../config/firebase";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Link } from "expo-router";
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [user, setUser] = useState(null);
+    const router = useRouter();
 
-    const handleSignIn = async () => {
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            setUser(userCredential.user);
-        } catch (error) {
-            console.error(error);
+    const onHandleLogin = () => {
+        if (email !== '' && password !== "") {
+            console.log("Signing in with Email and Password");
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    router.push('/vault'); 
+                })
+                .catch((err) => Alert.alert('Login error', err.message));
+        } else {
+            Alert.alert('Login error', 'Email and password must not be empty');
         }
-    }
+    };
     return (
         <SafeAreaView style={Styles.mainContainer}>
             <Stack.Screen options={{ title: "Login"}} />
@@ -28,7 +32,7 @@ export default function LoginScreen() {
                 <Text style={Styles.title}>Login</Text>
                 <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark"></InputBox>
                 <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword}></InputBox>
-                <CustomButton onPress={handleSignIn} theme="dark">Login</CustomButton>
+                <CustomButton onPress={onHandleLogin} theme="dark">Login</CustomButton>
                 <Link href="./signup">SignUp</Link>
 
             </View>

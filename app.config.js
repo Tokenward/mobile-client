@@ -4,8 +4,8 @@ import 'dotenv/config';
 export default {
   "expo": {
     "scheme": "amce",
-    "name": "ChatApp",
-    "slug": "ChatApp",
+    "name": "Tokenward",
+    "slug": "Tokenward",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
