@@ -1,3 +1,11 @@
+/**
+ * Project: Tokenward Mobile-Client
+ * File: /config/firebase.js
+ * Description: Configuration for the Firebase authentication + database
+ * Author: Mitja Kurath
+ * Date: [2024-05-06]
+ */
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
