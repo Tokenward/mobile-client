@@ -1,5 +1,5 @@
 import { Slot, Tabs } from "expo-router";
-import { Text, View, TouchableOpacity, StatusBar } from "react-native";
+import { Text, View, TouchableOpacity, StatusBar, Alert } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import { useRouter } from "expo-router";
@@ -81,7 +81,7 @@ export default function TabsLayout() {
                             <View style={{ flexDirection: 'row', marginRight: 15 }}>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        console.log("Search button pressed!");
+                                        Alert.alert("Not Implemented yet");
                                     }}
                                     style={{ marginRight: 15 }}
                             
@@ -119,11 +119,6 @@ export default function TabsLayout() {
                                 name="settings-outline"
                                 color={color}
                             />
-                        ),
-                        headerRight: () => (
-                            <View style={{ flexDirection: 'row', marginRight: 15 }}>
-
-                            </View>
                         ),
                     }}
                 />
