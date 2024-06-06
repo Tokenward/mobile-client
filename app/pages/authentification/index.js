@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
