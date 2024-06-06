@@ -2,13 +2,17 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Item({ icon, label, type }) {
+export default function Item({ icon, label, type, name, content }) {
     return (
         <View style={styles.container}>
-            {type === 'icon' && <Image source={icon} style={styles.icon} />}
+            {type === 'icon' && icon && <Image source={{ uri: icon }} style={styles.icon} />}
             {type === 'folder' && <MaterialIcons name="folder" size={24} color="#fff" />}
             {type === 'list' && <MaterialIcons name="list" size={24} color="#fff" />}
-            <Text style={styles.label}>{label}</Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.label}>{label}</Text>
+                {name && <Text style={styles.name}>{name}</Text>}
+                {content && <Text style={styles.content}>{content}</Text>}
+            </View>
         </View>
     );
 }
@@ -17,7 +21,10 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 5,
+        padding: 16,
+        backgroundColor: '#444',
+        marginVertical: 8,
+        borderRadius: 4,
     },
     icon: {
         width: 24,
@@ -25,8 +32,20 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     label: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#fff',
+    },
+    textContainer: {
         marginLeft: 10,
+    },
+    name: {
+        fontSize: 16,
+        color: '#bbb',
+        marginTop: 4,
+    },
+    content: {
+        fontSize: 14,
+        color: '#aaa',
+        marginTop: 2,
     },
 });
