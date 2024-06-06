@@ -7,7 +7,7 @@ export default function Item({ icon, label, type, name, content, onDelete }) {
         <View style={styles.container}>
             {type === 'icon' && icon && <Image source={{ uri: icon }} style={styles.icon} />}
             {type === 'folder' && <MaterialIcons name="folder" size={24} color="#fff" />}
-            {type === 'list' && <MaterialIcons name="list" size={24} color="#fff" />}
+            {type === 'list' && <MaterialIcons name="key" size={24} color="#fff" />}
             <View style={styles.textContainer}>
                 <Text style={styles.label}>{label}</Text>
                 {name && <Text style={styles.name}>{name}</Text>}
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 16,
         backgroundColor: '#444',
         marginVertical: 8,
@@ -38,10 +38,12 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 18,
         color: '#fff',
+        justifyContent: "center",
     },
     textContainer: {
         flex: 1,
         marginLeft: 10,
+        justifyContent: 'center',
     },
     name: {
         fontSize: 16,

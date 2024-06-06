@@ -1,23 +1,28 @@
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import InputBox from "../../../components/InputBox"
+import InputBox from "../../../components/InputBox";
 import { useState } from "react";
 import CustomButton from "../../../components/CustomButton";
-import {changeUserEmail} from "../../../lib/api/user"
+import { changeUserEmail } from "../../../lib/api/user";
 
 export default function SettingsScreen() {
-    const [NewEmail, setNewEmail] = useState('');
+    const [newEmail, setNewEmail] = useState('');
+    const [error, setError] = useState(null);
 
-    const handleSave = () => {
-        changeUserEmail(NewEmail);
+    const handleSave = async () => {
+        try {
+            await changeUserEmail(newEmail);
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <Text style={styles.headerText}>Change Email</Text>
-            <InputBox label="New Email" value={NewEmail} onChangeText={setNewEmail} />
+            <InputBox label="New Email" value={newEmail} onChangeText={setNewEmail} />
+            {error && <Text style={styles.errorText}>{error}</Text>}
             <CustomButton onPress={handleSave}>Save</CustomButton>
-
         </SafeAreaView>
     );
 }
@@ -28,30 +33,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         padding: 16,
     },
-    header: {
-        padding: 16,
-        backgroundColor: '#444',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: '#555',
-    },
     headerText: {
         fontSize: 24,
         color: '#fff',
     },
-    container: {
-        padding: 16,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        color: '#bbb',
+    errorText: {
+        color: 'red',
         marginVertical: 10,
-    },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 });
