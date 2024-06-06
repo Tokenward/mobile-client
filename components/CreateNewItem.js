@@ -2,11 +2,16 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { auth, database } from '../config/firebase';
+import CustomButton from './CustomButton';
+import { useRouter } from "expo-router";
+
 
 export default function CreateNewItem({ navigation }) {
     const [type, setType] = useState('');
     const [label, setLabel] = useState('');
     const [icon, setIcon] = useState('');
+    const router = useRouter();
+
 
     const handleSave = async () => {
         const user = firebase.auth().currentUser;
@@ -42,7 +47,9 @@ export default function CreateNewItem({ navigation }) {
                     value={icon}
                     onChangeText={setIcon}
                 />
-                <Button title="Save" onPress={handleSave} />
+                <CustomButton onPress={handleSave} >Save</CustomButton>
+                <Button title="Cancel" onPress={() => router.navigate("../../(tabs)/vault")} />
+
             </View>
         </SafeAreaView>
     );
