@@ -26,7 +26,7 @@ export default function CreateNewItem({ navigation }) {
             try {
                 await addDoc(collection(database, 'users', userId, type), newItem);
                 console.log("Document successfully written!");
-                navigation.goBack();
+                router.navigate("../../(tabs)/vault");
             } catch (error) {
                 console.error("Error adding document: ", error);
             }
