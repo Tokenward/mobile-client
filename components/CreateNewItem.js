@@ -7,7 +7,7 @@ import InputBox from './InputBox';
 import { collection, addDoc } from 'firebase/firestore';
 
 export default function CreateNewItem({ navigation }) {
-    const [type, setType] = useState('password');
+    const [type, setType] = useState('noFolderItems');
     const [label, setLabel] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
