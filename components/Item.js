@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Item({ icon, label, type, name, content }) {
+export default function Item({ icon, label, type, name, content, onDelete }) {
     return (
         <View style={styles.container}>
             {type === 'icon' && icon && <Image source={{ uri: icon }} style={styles.icon} />}
@@ -13,6 +13,9 @@ export default function Item({ icon, label, type, name, content }) {
                 {name && <Text style={styles.name}>{name}</Text>}
                 {content && <Text style={styles.content}>{content}</Text>}
             </View>
+            <TouchableOpacity onPress={onDelete}>
+                <MaterialIcons name="delete" size={24} color="#ff0000" style={styles.deleteIcon} />
+            </TouchableOpacity>
         </View>
     );
 }
@@ -21,6 +24,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         padding: 16,
         backgroundColor: '#444',
         marginVertical: 8,
@@ -36,6 +40,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     textContainer: {
+        flex: 1,
         marginLeft: 10,
     },
     name: {
@@ -47,5 +52,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#aaa',
         marginTop: 2,
+    },
+    deleteIcon: {
+        marginLeft: 10,
     },
 });
