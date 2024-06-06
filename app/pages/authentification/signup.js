@@ -41,7 +41,7 @@ export default function RegisterScreen() {
       <StatusBar backgroundColor="#393939" barStyle="light-content" />
       <View style={styles.mainContainer}>
         <Text style={styles.title}>Register</Text>
-        <InputBox label={"Email"} value={email} onChangeText={setEmail} />
+        <InputBox label={"Email"} value={email} keyboardType="email-address" onChangeText={setEmail} />
         <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword} />
         <CustomButton onPress={handleSignUp}>Register</CustomButton>
         <View style={styles.linkContainer}>

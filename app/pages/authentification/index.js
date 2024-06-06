@@ -36,10 +36,10 @@ export default function LoginScreen() {
                     headerTintColor: "#fff"
                 }} 
             />
-            <StatusBar backgroundColor="#393939" barStyle="light-content" />
+            <StatusBar backgroundColor="#1f1f1f" barStyle="light-content" />
             <View style={styles.mainContainer}>
                 <Text style={styles.title}>Login</Text>
-                <InputBox label={"Email"} value={email} onChangeText={setEmail} theme="dark" />
+                <InputBox label={"Email"} value={email} keyboardType="email-address" onChangeText={setEmail} theme="dark" />
                 <InputBox label={"Password"} hidden={true} value={password} onChangeText={setPassword} />
                 <CustomButton onPress={onHandleLogin} theme="dark">Login</CustomButton>
                 <View style={styles.linkContainer}>
