@@ -11,12 +11,10 @@ import { getVaultItems } from '../lib/api/item';
 
 export default function CreateNewItem({ navigation }) {
     const [type, setType] = useState('noFolderItems');
-    const [label, setLabel] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [icon, setIcon] = useState('');
-    const [tags, setTags] = useState([]);
-    const [folders, setFolders] = useState([]);
+    const [tag, setTags] = useState([]);
+    const [folder, setFolders] = useState([]);
     const [selectedTag, setSelectedTag] = useState(null);
     const [selectedFolder, setSelectedFolder] = useState(null);
     const router = useRouter();
@@ -33,11 +31,6 @@ export default function CreateNewItem({ navigation }) {
                 setTags(tags);
                 setFolders(folders);
 
-
-                // const tagsSnapshot = await getDocs(collection(database, 'users', userId, 'tags'));
-                // const foldersSnapshot = await getDocs(collection(database, 'users', userId, 'folders'));
-                // setTags(tagsSnapshot.docs.map(doc => ({ label: doc.data().label, value: doc.id })));
-                // setFolders(foldersSnapshot.docs.map(doc => ({ label: doc.data().label, value: doc.id })));
             }
         };
 
@@ -45,7 +38,7 @@ export default function CreateNewItem({ navigation }) {
     }, []);
 
     const handleSave = () => {
-        saveNewItem(title, type, label, icon, content, selectedTag, selectedFolder, router);
+        saveNewItem(title, type, content, selectedTag, selectedFolder);
     };
 
     const itemTypes = [
@@ -63,13 +56,13 @@ export default function CreateNewItem({ navigation }) {
                     <>
                         <InputBox label="Name" value={title} onChangeText={setTitle} />
                         <InputBox label="Content" value={content} onChangeText={setContent} />
-                        <Dropdown label="Select Tag" data={tags} onSelect={setSelectedTag} value={selectedTag} />
-                        <Dropdown label="Select Folder" data={folders} onSelect={setSelectedFolder} value={selectedFolder} />
+                        <Dropdown label="Select Tag" data={tag} onSelect={setSelectedTag} value={selectedTag} />
+                        <Dropdown label="Select Folder" data={folder} onSelect={setSelectedFolder} value={selectedFolder} />
                     </>
                 )}
                 {type === 'folder' && (
                     <>
-                        <InputBox label="Content" value={content} onChangeText={setContent} />
+                        <InputBox label="Title" value={title} onChangeText={setTitle} />
                     </>
                 )}
                 {type === 'tag' && (
