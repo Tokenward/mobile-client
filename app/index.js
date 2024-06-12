@@ -6,26 +6,27 @@
  * Date: [2024-05-06]
  */
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 
-
 export default function HomeScreen() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const auth = getAuth();
 
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            const userToken = await AsyncStorage.getItem('userToken');
-            setIsLoggedIn(!!userToken);
-        };
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, [auth]);
 
-        checkLoginStatus();
-    }, []);
-
-    if (isLoggedIn) {
-        return <Redirect href="/vault" />;
-    } else {
-        return <Redirect href="/pages/authentification/" />;
-    }
+  if (isLoggedIn) {
+    return <Redirect href="/vault" />;
+  } else {
+    return <Redirect href="/pages/authentification/" />;
+  }
 }

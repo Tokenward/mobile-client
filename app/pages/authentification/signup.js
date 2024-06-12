@@ -1,14 +1,12 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
 import CustomButton from "../../../components/CustomButton";
 import { Stack, useRouter } from "expo-router";
-import { Link } from "expo-router";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { auth } from "../../../config/firebase";
 import { TouchableOpacity } from "react-native";
+import { signup } from "../../../lib/api/user";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState('');
@@ -16,15 +14,10 @@ export default function RegisterScreen() {
   const router = useRouter();
 
   const handleSignUp = () => {
-    if (email !== '' && password !== "") {
-      console.log("Registering with Email and Password");
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          router.push('/vault');
-        })
-        .catch((err) => Alert.alert('Signup error', err.message));
-    } else {
-      Alert.alert('Signup error', 'Email and password must not be empty');
+    try {
+      signup(email, password);
+    } catch(err) {
+      Alert.alert('Error while signup', err);
     }
   };
 

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../config/firebase";
 import { TouchableOpacity } from "react-native";
+import { login } from "../../../lib/api/user";
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');
@@ -16,16 +17,7 @@ export default function LoginScreen() {
     const router = useRouter();
 
     const onHandleLogin = () => {
-        if (email !== '' && password !== "") {
-            console.log("Signing in with Email and Password");
-            signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    router.push('/vault');
-                })
-                .catch((err) => Alert.alert('Login error', err.message));
-        } else {
-            Alert.alert('Login error', 'Email and password must not be empty');
-        }
+      login(email,password)
     };
 
     const onClick = () => {
