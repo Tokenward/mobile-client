@@ -62,7 +62,7 @@ export default function VaultScreen({ navigation }) {
                 ))}
                 <Text style={styles.sectionTitle}>NO FOLDER</Text>
                 {noFolderItems.map((item) => (
-                    <Item key={item.id} type="list" label={item.label} name={item.title} content={item.content} onDelete={() => handleDelete(item.id, 'noFolderItems')} />
+                    <Item key={item.id} type="list" label={item.label} name={item.title} content={item.content} onDelete={() => handleDelete(item.id, 'passwordToken')} />
                 ))}
             </ScrollView>
         </SafeAreaView>
