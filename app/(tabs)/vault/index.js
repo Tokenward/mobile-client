@@ -58,7 +58,7 @@ export default function VaultScreen({ navigation }) {
                 ))}
                 <Text style={styles.sectionTitle}>FOLDERS</Text>
                 {folders.map((folder) => (
-                    <Item key={folder.id} type="folder" label={folder.label} onDelete={() => handleDelete(folder.id, 'folder')} />
+                    <Item key={folder.id} type="folder" label={folder.content} onDelete={() => handleDelete(folder.id, 'folder')} />
                 ))}
                 <Text style={styles.sectionTitle}>NO FOLDER</Text>
                 {noFolderItems.map((item) => (

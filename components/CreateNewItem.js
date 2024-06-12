@@ -6,7 +6,8 @@ import InputBox from './InputBox';
 import saveNewItem from '../lib/api/item';
 import Dropdown from './Dropdown';
 import { auth, database } from '../config/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { getVaultItems } from '../lib/api/item';
+
 
 export default function CreateNewItem({ navigation }) {
     const [type, setType] = useState('noFolderItems');
@@ -20,15 +21,23 @@ export default function CreateNewItem({ navigation }) {
     const [selectedFolder, setSelectedFolder] = useState(null);
     const router = useRouter();
 
+
+
     useEffect(() => {
         const fetchTagsAndFolders = async () => {
             const user = auth.currentUser;
             if (user) {
                 const userId = user.uid;
-                const tagsSnapshot = await getDocs(collection(database, 'users', userId, 'tags'));
-                const foldersSnapshot = await getDocs(collection(database, 'users', userId, 'folders'));
-                setTags(tagsSnapshot.docs.map(doc => ({ label: doc.data().label, value: doc.id })));
-                setFolders(foldersSnapshot.docs.map(doc => ({ label: doc.data().label, value: doc.id })));
+
+                const { tags, folders } = await getVaultItems();
+                setTags(tags);
+                setFolders(folders);
+
+
+                // const tagsSnapshot = await getDocs(collection(database, 'users', userId, 'tags'));
+                // const foldersSnapshot = await getDocs(collection(database, 'users', userId, 'folders'));
+                // setTags(tagsSnapshot.docs.map(doc => ({ label: doc.data().label, value: doc.id })));
+                // setFolders(foldersSnapshot.docs.map(doc => ({ label: doc.data().label, value: doc.id })));
             }
         };
 
@@ -50,14 +59,24 @@ export default function CreateNewItem({ navigation }) {
             <View style={styles.container}>
                 <Text style={styles.title}>Create New Password/Token</Text>
                 <Dropdown label="Select item type" data={itemTypes} onSelect={(item) => setType(item.value)} value={itemTypes.find(item => item.value === type)} />
-                <InputBox label="Name" value={title} onChangeText={setTitle} />
                 {type === 'passwordToken' && (
                     <>
+                        <InputBox label="Name" value={title} onChangeText={setTitle} />
+                        <InputBox label="Content" value={content} onChangeText={setContent} />
                         <Dropdown label="Select Tag" data={tags} onSelect={setSelectedTag} value={selectedTag} />
                         <Dropdown label="Select Folder" data={folders} onSelect={setSelectedFolder} value={selectedFolder} />
                     </>
                 )}
-                <InputBox label="Content" value={content} onChangeText={setContent} />
+                {type === 'folder' && (
+                    <>
+                        <InputBox label="Content" value={content} onChangeText={setContent} />
+                    </>
+                )}
+                {type === 'tag' && (
+                    <>
+                        <InputBox label="Name" value={title} onChangeText={setTitle} />
+                    </>
+                )}
                 <CustomButton onPress={handleSave}>Save</CustomButton>
                 <Button title="Cancel" onPress={() => router.navigate("../../(tabs)/vault")} />
             </View>
