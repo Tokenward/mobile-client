@@ -4,6 +4,7 @@ import InputBox from "../../../components/InputBox";
 import { useState } from "react";
 import CustomButton from "../../../components/CustomButton";
 import { changeUserEmail } from "../../../lib/api/user";
+import { Alert } from "react-native";
 
 export default function SettingsScreen() {
     const [newEmail, setNewEmail] = useState('');
