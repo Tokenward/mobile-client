@@ -54,15 +54,15 @@ export default function VaultScreen({ navigation }) {
             <ScrollView style={styles.container}>
                 <Text style={styles.sectionTitle}>TAGS</Text>
                 {tags.map((tag) => (
-                    <Item key={tag.id} type="icon" icon={tag.icon} label={tag.label} onDelete={() => handleDelete(tag.id, 'tag')} />
+                    <Item key={tag.id} type="icon" icon={tag.icon} label={tag.title} onDelete={() => handleDelete(tag.id, 'tag')} />
                 ))}
                 <Text style={styles.sectionTitle}>FOLDERS</Text>
                 {folders.map((folder) => (
-                    <Item key={folder.id} type="folder" label={folder.content} onDelete={() => handleDelete(folder.id, 'folder')} />
+                    <Item key={folder.id} type="folder" label={folder.title} onDelete={() => handleDelete(folder.id, 'folder')} />
                 ))}
                 <Text style={styles.sectionTitle}>NO FOLDER</Text>
                 {noFolderItems.map((item) => (
-                    <Item key={item.id} type="list" label={item.label} name={item.title} content={item.content} onDelete={() => handleDelete(item.id, 'passwordToken')} />
+                    <Item key={item.id} type="list" label={item.title} name={item.label} content={item.content} onDelete={() => handleDelete(item.id, 'passwordToken')} />
                 ))}
             </ScrollView>
         </SafeAreaView>

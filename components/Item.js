@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Item({ icon, label, type, name, content, onDelete }) {
+export default function Item({ icon, title, type, name, content, onDelete }) {
     return (
         <View style={styles.container}>
             {type === 'icon' && icon && <Image source={{ uri: icon }} style={styles.icon} />}
             {type === 'folder' && <MaterialIcons name="folder" size={24} color="#fff" />}
             {type === 'list' && <MaterialIcons name="key" size={24} color="#fff" />}
             <View style={styles.textContainer}>
-                <Text style={styles.label}>{label}</Text>
+                <Text style={styles.label}>{title}</Text>
                 {name && <Text style={styles.name}>{name}</Text>}
                 {content && <Text style={styles.content}>{content}</Text>}
             </View>
