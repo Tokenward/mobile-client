@@ -35,6 +35,8 @@ export default function SettingsScreen() {
             <InputBox label="New Email" value={newEmail} onChangeText={setNewEmail} />
             {error && <Text style={styles.errorText}>{error}</Text>}
             <CustomButton onPress={handleSendVerification}>Send Verification Link</CustomButton>
+            <Text style={styles.headerText}>Change Email</Text>
+            <InputBox label="New Password" value={newEmail} onChangeText={setNewEmail} />
         </SafeAreaView>
     );
 }
