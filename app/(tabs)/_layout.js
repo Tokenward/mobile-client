@@ -12,7 +12,7 @@ export default function TabsLayout() {
     const HeaderLeft = () => {
         return (
             <>
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <TouchableOpacity onPress={() => setModalVisible(true)} style={{marginLeft: 16}}>
                     <Ionicons name="person-circle-outline" size={30} color="white" />
                 </TouchableOpacity>
                 <Modal
