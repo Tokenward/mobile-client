@@ -44,6 +44,8 @@ export default function VaultScreen({ navigation }) {
         }
     };
 
+
+
     if (loading) {
         return (
             <SafeAreaView style={styles.safeArea}>
@@ -76,7 +78,6 @@ export default function VaultScreen({ navigation }) {
                         type="icon"
                         name={tag.name}
                         content={tag.content}
-                        onDelete={() => handleDelete(tag.id, 'tag')}
                     />
                 ))}
 
@@ -89,11 +90,10 @@ export default function VaultScreen({ navigation }) {
                         type="folder"
                         name={folder.name}
                         content={folder.content}
-                        onDelete={() => handleDelete(folder.id, 'folder')}
                     />
                 ))}
 
-                <Text style={styles.sectionTitle}>No Folder Password Tokens</Text>
+                <Text style={styles.sectionTitle}>Unsorted Passwords/Tokens</Text>
                 {noFolderItems.map(item => (
                     <Item
                         key={item.id}
@@ -102,7 +102,6 @@ export default function VaultScreen({ navigation }) {
                         type="list"
                         name={item.name}
                         content={item.content}
-                        onDelete={() => handleDelete(item.id, 'passwordToken')}
                     />
                 ))}
             </ScrollView>
