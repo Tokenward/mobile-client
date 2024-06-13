@@ -27,9 +27,9 @@ export default function CreateNewItem({ navigation }) {
             if (user) {
                 const userId = user.uid;
 
-                const { tags, folders } = await getVaultItems();
-                setTags(tags);
-                setFolders(folders);
+                const { tagData, folderData } = await getVaultItems();
+                setTags(tagData);
+                setFolders(folderData);
 
             }
         };
@@ -39,6 +39,8 @@ export default function CreateNewItem({ navigation }) {
 
     const handleSave = () => {
         saveNewItem(title, type, content, selectedTag, selectedFolder);
+        router.navigate("../../(tabs)/vault")
+
     };
 
     const itemTypes = [
@@ -62,7 +64,7 @@ export default function CreateNewItem({ navigation }) {
                 )}
                 {type === 'folder' && (
                     <>
-                        <InputBox label="Title" value={title} onChangeText={setTitle} />
+                        <InputBox label="Name" value={title} onChangeText={setTitle} />
                     </>
                 )}
                 {type === 'tag' && (
