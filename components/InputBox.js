@@ -8,11 +8,11 @@ export default function InputBox({ label, hidden = false, value, onChangeText, k
     const colors = CustomColors[theme];
 
     return (
-        <View style={styles.container}> 
+        <View style={styles.container}>
             <TextInput 
-                style={[styles.input, { backgroundColor: colors.surface, color: colors.onSurface }]}
+                style={styles.input}
                 placeholder={label}
-                placeholderTextColor={colors.onSurface} 
+                placeholderTextColor='#fff' 
                 secureTextEntry={hidden}
                 value={value}
                 onChangeText={onChangeText}
@@ -31,11 +31,17 @@ const styles = StyleSheet.create({
     input: {
         height: 48,
         width: "100%",
+        color: 'white',
+        backgroundColor: '#444',
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 4,
         marginTop: 5,
         marginBottom: 5,
         fontSize: 16,
-        borderRadius: 10,
         padding: 10,
         alignSelf: "center",
+        borderWidth: 1,
+        elevation: 5,
     },
 });

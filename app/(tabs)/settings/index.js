@@ -1,18 +1,29 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Modal, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InputBox from "../../../components/InputBox";
 import { useState } from "react";
 import CustomButton from "../../../components/CustomButton";
-import { changeUserEmail } from "../../../lib/api/user";
+import { sendVerificationEmail, changeUserEmail } from "../../../lib/api/user";
 import { Alert } from "react-native";
 
 export default function SettingsScreen() {
     const [newEmail, setNewEmail] = useState('');
     const [error, setError] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const handleSendVerification = async () => {
+        try {
+            await sendVerificationEmail(newEmail);
+            setModalVisible(true);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
 
     const handleSave = async () => {
         try {
             await changeUserEmail(newEmail);
+            Alert.alert('Success', 'Email change process initiated. Please verify your new email.');
         } catch (err) {
             setError(err.message);
         }
@@ -23,7 +34,7 @@ export default function SettingsScreen() {
             <Text style={styles.headerText}>Change Email</Text>
             <InputBox label="New Email" value={newEmail} onChangeText={setNewEmail} />
             {error && <Text style={styles.errorText}>{error}</Text>}
-            <CustomButton onPress={handleSave}>Save</CustomButton>
+            <CustomButton onPress={handleSendVerification}>Send Verification Link</CustomButton>
         </SafeAreaView>
     );
 }
