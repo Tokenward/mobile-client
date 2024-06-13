@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import VaultScreen from '../../(tabs)/vault';
-import DetailScreen from '.';
+import DetailScreen from './index';
 
 export default function Layout() {
     return (

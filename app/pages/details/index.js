@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function DetailScreen({ route }) {
     const { icon, title, type, name, content } = route.params;
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.title}>{title}</Text>
             {name && <Text style={styles.name}>Name: {name}</Text>}
             {content && <Text style={styles.content}>Content: {content}</Text>}
-        </View>
+        </SafeAreaView>
     );
 }
 

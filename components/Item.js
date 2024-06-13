@@ -17,7 +17,7 @@ export default function Item({ icon, title, type, name, content }) {
 
             <Link
                 href={{
-                    pathname: '/DetailScreen',
+                    pathname: '../../pages/details',
                     params: { icon, title, type, name, content },
                 }}
                 asChild
