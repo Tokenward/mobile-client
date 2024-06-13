@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
         padding: 16,
         backgroundColor: '#444',
         marginVertical: 8,
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 18,
         color: '#fff',
-        justifyContent: "center",
     },
     textContainer: {
         flex: 1,

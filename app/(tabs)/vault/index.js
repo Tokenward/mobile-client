@@ -8,20 +8,21 @@ export default function VaultScreen({ navigation }) {
     const [folders, setFolders] = useState([]);
     const [noFolderItems, setNoFolderItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { tags, folders, noFolderItems } = await getVaultItems();
-                console.log("Fetched Tags:", tags);
-                console.log("Fetched Folders:", folders);
-                console.log("Fetched No Folder Items:", noFolderItems);
-                setTags(tags);
-                setFolders(folders);
-                setNoFolderItems(noFolderItems);
+                const data = await getVaultItems();
+                console.log("Fetched Data:", data);
+                setTags(data.tags);
+                setFolders(data.folders);
+                setNoFolderItems(data.noFolderPasswordsTokens);
                 setLoading(false);
             } catch (error) {
                 console.error("Error while fetching user data: \n" + error);
+                setError(error);
+                setLoading(false);
             }
         };
 
@@ -31,9 +32,13 @@ export default function VaultScreen({ navigation }) {
     const handleDelete = async (itemId, itemType) => {
         try {
             await deleteItem(itemId, itemType);
-            setTags(tags.filter(tag => tag.id !== itemId));
-            setFolders(folders.filter(folder => folder.id !== itemId));
-            setNoFolderItems(noFolderItems.filter(item => item.id !== itemId));
+            if (itemType === 'tag') {
+                setTags(tags.filter(tag => tag.id !== itemId));
+            } else if (itemType === 'folder') {
+                setFolders(folders.filter(folder => folder.id !== itemId));
+            } else if (itemType === 'passwordToken') {
+                setNoFolderItems(noFolderItems.filter(item => item.id !== itemId));
+            }
         } catch (error) {
             console.error("Error deleting item: ", error);
         }
@@ -49,20 +54,56 @@ export default function VaultScreen({ navigation }) {
         );
     }
 
+    if (error) {
+        return (
+            <SafeAreaView style={styles.safeArea}>
+                <View style={styles.loadingContainer}>
+                    <Text style={styles.errorText}>Error: {error.message}</Text>
+                </View>
+            </SafeAreaView>
+        );
+    }
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView style={styles.container}>
-                <Text style={styles.sectionTitle}>TAGS</Text>
-                {tags.map((tag) => (
-                    <Item key={tag.id} type="icon" icon={tag.icon} label={tag.title} onDelete={() => handleDelete(tag.id, 'tag')} />
+                <Text style={styles.sectionTitle}>Tags</Text>
+                {tags.map(tag => (
+                    <Item
+                        key={tag.id}
+                        icon={tag.icon}
+                        title={tag.title}
+                        type="icon"
+                        name={tag.name}
+                        content={tag.content}
+                        onDelete={() => handleDelete(tag.id, 'tag')}
+                    />
                 ))}
-                <Text style={styles.sectionTitle}>FOLDERS</Text>
-                {folders.map((folder) => (
-                    <Item key={folder.id} type="folder" label={folder.title} onDelete={() => handleDelete(folder.id, 'folder')} />
+
+                <Text style={styles.sectionTitle}>Folders</Text>
+                {folders.map(folder => (
+                    <Item
+                        key={folder.id}
+                        icon={folder.icon}
+                        title={folder.title}
+                        type="folder"
+                        name={folder.name}
+                        content={folder.content}
+                        onDelete={() => handleDelete(folder.id, 'folder')}
+                    />
                 ))}
-                <Text style={styles.sectionTitle}>NO FOLDER</Text>
-                {noFolderItems.map((item) => (
-                    <Item key={item.id} type="list" label={item.title} name={item.label} content={item.content} onDelete={() => handleDelete(item.id, 'passwordToken')} />
+
+                <Text style={styles.sectionTitle}>No Folder Password Tokens</Text>
+                {noFolderItems.map(item => (
+                    <Item
+                        key={item.id}
+                        icon={item.icon}
+                        title={item.title}
+                        type="list"
+                        name={item.name}
+                        content={item.content}
+                        onDelete={() => handleDelete(item.id, 'passwordToken')}
+                    />
                 ))}
             </ScrollView>
         </SafeAreaView>
@@ -86,5 +127,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    errorText: {
+        color: 'red',
     },
 });
