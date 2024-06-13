@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, ScrollView, ActivityIndicator } f
 import Item from '../../../components/Item';
 import { getVaultItems, deleteItem } from '../../../lib/api/item';
 
-export default function VaultScreen({ navigation }) {
+export default function VaultScreen() {
     const [tags, setTags] = useState([]);
     const [folders, setFolders] = useState([]);
     const [noFolderItems, setNoFolderItems] = useState([]);
@@ -43,8 +43,6 @@ export default function VaultScreen({ navigation }) {
             console.error("Error deleting item: ", error);
         }
     };
-
-
 
     if (loading) {
         return (
