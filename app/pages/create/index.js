@@ -9,7 +9,7 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, StatusBar, Text } from "react-native";
 import { Stack } from "expo-router";
-import CreateNewItem from "../../../components/CreateNewItem";
+import CreateNewItem from "../../../components/create/CreateNewItemScreen";
 
 export default function CreatePage() {
   try {

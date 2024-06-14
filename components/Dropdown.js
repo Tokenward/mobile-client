@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 
-export default function({ label, data, onSelect, value, multiple }){
+export default function Dropdown({ label, data, onSelect, value, multiple }){
     const [showOptions, setShowOptions] = useState(false);
 
     const handleSelect = (item) => {
