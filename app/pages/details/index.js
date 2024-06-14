@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, StyleSheet, Alert, TextInput, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import deleteItem from "../../../lib/api/item"
+import {deleteItem} from "../../../lib/api/item"
 import { auth, database } from '../../../config/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import InputBox from '../../../components/InputBox';
