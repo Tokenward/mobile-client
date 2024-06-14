@@ -1,7 +1,5 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import VaultScreen from '../../(tabs)/vault';
-import DetailScreen from './index';
 
 export default function Layout() {
     return (
@@ -18,8 +16,9 @@ export default function Layout() {
                     },
                 }}
             >
-                <Stack.Screen name="VaultScreen" component={VaultScreen} options={{ title: 'Vault' }} />
-                <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ title: 'Detail' }} />
+                <Stack.Screen name="vault" options={{ title: 'Vault' }} />
+                <Stack.Screen name="details" options={{ title: 'Detail' }} />
             </Stack>
         </>
-    )}
+    );
+}

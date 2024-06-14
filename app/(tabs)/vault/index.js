@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import Item from '../../../components/Item';
 import { getVaultItems, deleteItem } from '../../../lib/api/item';
+import { useNavigation } from '@react-navigation/native';
 
 export default function VaultScreen() {
     const [tags, setTags] = useState([]);
@@ -9,6 +10,7 @@ export default function VaultScreen() {
     const [noFolderItems, setNoFolderItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,6 +78,7 @@ export default function VaultScreen() {
                         type="icon"
                         name={tag.name}
                         content={tag.content}
+                        onPress={() => navigation.navigate('details', { id: tag.id, icon: tag.icon, title: tag.title, type: 'tag', name: tag.name, content: tag.content })}
                     />
                 ))}
 
@@ -88,6 +91,7 @@ export default function VaultScreen() {
                         type="folder"
                         name={folder.name}
                         content={folder.content}
+                        onPress={() => navigation.navigate('details', { id: folder.id, icon: folder.icon, title: folder.title, type: 'folder', name: folder.name, content: folder.content })}
                     />
                 ))}
 
@@ -100,6 +104,7 @@ export default function VaultScreen() {
                         type="list"
                         name={item.name}
                         content={item.content}
+                        onPress={() => navigation.navigate('details', { id: item.id, icon: item.icon, title: item.title, type: 'passwordToken', name: item.name, content: item.content })}
                     />
                 ))}
             </ScrollView>
