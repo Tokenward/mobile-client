@@ -1,11 +1,18 @@
-import { View, Text, StyleSheet, Alert } from "react-native";
+/**
+ * Project: Tokenward Mobile-Client
+ * File: /app/pages/authentication/RegisterScreen.js
+ * Description: Implementation of the RegisterScreen component which handles user registration.
+ * Author: Mitja Kurath
+ * Date: [2024-06-14]
+ */
+
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
 import CustomButton from "../../../components/CustomButton";
 import { Stack, useRouter } from "expo-router";
-import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { TouchableOpacity } from "react-native";
 import { signup } from "../../../lib/api/user";
 
 export default function RegisterScreen() {
@@ -13,17 +20,20 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     try {
-      signup(email, password);
-    } catch(err) {
-      Alert.alert('Error while signup', err);
+      await signup(email, password);
+      Alert.alert('Success', 'You have successfully signed up!');
+      router.push('/vault');
+    } catch (err) {
+      console.error('Signup error:', err);
+      Alert.alert('Signup error', 'An error occurred while signing up.');
     }
   };
 
   const onClick = () => {
-    router.push('./');
-  }
+    router.push('/pages/authentication/login');
+  };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -35,7 +45,7 @@ export default function RegisterScreen() {
           headerStyle: {
             backgroundColor: "#393939",
           },
-          headerTintColor: "#fff"
+          headerTintColor: "#fff",
         }}
       />
       <View style={styles.mainContainer}>

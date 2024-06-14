@@ -1,23 +1,22 @@
+/**
+ * Project: Tokenward Mobile-Client
+ * File: /app/pages/authentication/LoginScreen.js
+ * Description: Implementation of the LoginScreen component which handles user authentication.
+ * Author: Mitja Kurath
+ * Date: [2024-06-14]
+ */
+
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
 import CustomButton from "../../../components/CustomButton";
 import { Stack, useRouter } from "expo-router";
-import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../config/firebase";
 import * as LocalAuthentication from 'expo-local-authentication';
 import { login, getLocalData, saveDataLocally } from "../../../lib/api/user";
-
-const clearAsyncStorage = async () => {
-    try {
-        await AsyncStorage.clear();
-        console.log('AsyncStorage cleared');
-    } catch (error) {
-        console.error('Error clearing AsyncStorage:', error);
-    }
-};
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -26,9 +25,6 @@ export default function LoginScreen() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Clear AsyncStorage during development
-      // await clearAsyncStorage();
-
       const localData = await getLocalData();
       if (localData) {
         setEmail(localData.email);
@@ -62,31 +58,36 @@ export default function LoginScreen() {
   };
 
   const handleFaceID = async () => {
-    const hasHardware = await LocalAuthentication.hasHardwareAsync();
-    if (!hasHardware) {
-      Alert.alert("Face ID not supported", "Your device does not support Face ID.");
-      return;
-    }
-
-    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
-    if (!isEnrolled) {
-      Alert.alert("Face ID not set up", "Please set up Face ID on your device.");
-      return;
-    }
-
-    const result = await LocalAuthentication.authenticateAsync();
-    if (result.success) {
-      const localData = await getLocalData();
-      if (localData) {
-        console.log('Face ID Authentication succeeded. Logging in with:', localData);
-        setEmail(localData.email);
-        setPassword(localData.password);
-        onHandleLogin();
-      } else {
-        Alert.alert("No saved credentials", "No saved credentials found. Please log in manually first.");
+    try {
+      const hasHardware = await LocalAuthentication.hasHardwareAsync();
+      if (!hasHardware) {
+        Alert.alert("Face ID not supported", "Your device does not support Face ID.");
+        return;
       }
-    } else {
-      Alert.alert("Authentication failed", "Face ID authentication failed. Please try again.");
+
+      const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+      if (!isEnrolled) {
+        Alert.alert("Face ID not set up", "Please set up Face ID on your device.");
+        return;
+      }
+
+      const result = await LocalAuthentication.authenticateAsync();
+      if (result.success) {
+        const localData = await getLocalData();
+        if (localData) {
+          console.log('Face ID Authentication succeeded. Logging in with:', localData);
+          setEmail(localData.email);
+          setPassword(localData.password);
+          onHandleLogin();
+        } else {
+          Alert.alert("No saved credentials", "No saved credentials found. Please log in manually first.");
+        }
+      } else {
+        Alert.alert("Authentication failed", "Face ID authentication failed. Please try again.");
+      }
+    } catch (error) {
+      console.error('Face ID error:', error);
+      Alert.alert("Face ID error", "An error occurred during Face ID authentication.");
     }
   };
 
