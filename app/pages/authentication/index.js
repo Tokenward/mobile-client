@@ -1,37 +1,94 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import InputBox from "../../../components/InputBox";
 import CustomButton from "../../../components/CustomButton";
 import { Stack, useRouter } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { auth } from "../../../config/firebase";
-import { TouchableOpacity } from "react-native";
-import { login } from "../../../lib/api/user";
+import * as LocalAuthentication from 'expo-local-authentication';
+import { login, getLocalData, saveDataLocally } from "../../../lib/api/user";
+
+const clearAsyncStorage = async () => {
+    try {
+        await AsyncStorage.clear();
+        console.log('AsyncStorage cleared');
+    } catch (error) {
+        console.error('Error clearing AsyncStorage:', error);
+    }
+};
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      // Clear AsyncStorage during development
+      // await clearAsyncStorage();
+
+      const localData = await getLocalData();
+      if (localData) {
+        setEmail(localData.email);
+        setPassword(localData.password);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const onHandleLogin = async () => {
     try {
+      console.log('Attempting to log in with email:', email, 'password:', password);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       if (!user.emailVerified) {
         Alert.alert("Login error", "Your email address is not verified. Please verify your email address before logging in.");
         return;
       }
-      login(email, password);
+      await login(email, password);
+      await saveDataLocally({ email, password });
+      router.push('/vault');
     } catch (error) {
+      console.error('Login error:', error);
       Alert.alert("Login error", "Invalid email or password.");
     }
   };
 
   const onClick = () => {
-    router.push('/pages/authentification/signup');
-  }
+    router.push('/pages/authentication/signup');
+  };
+
+  const handleFaceID = async () => {
+    const hasHardware = await LocalAuthentication.hasHardwareAsync();
+    if (!hasHardware) {
+      Alert.alert("Face ID not supported", "Your device does not support Face ID.");
+      return;
+    }
+
+    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+    if (!isEnrolled) {
+      Alert.alert("Face ID not set up", "Please set up Face ID on your device.");
+      return;
+    }
+
+    const result = await LocalAuthentication.authenticateAsync();
+    if (result.success) {
+      const localData = await getLocalData();
+      if (localData) {
+        console.log('Face ID Authentication succeeded. Logging in with:', localData);
+        setEmail(localData.email);
+        setPassword(localData.password);
+        onHandleLogin();
+      } else {
+        Alert.alert("No saved credentials", "No saved credentials found. Please log in manually first.");
+      }
+    } else {
+      Alert.alert("Authentication failed", "Face ID authentication failed. Please try again.");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -53,6 +110,9 @@ export default function LoginScreen() {
         <CustomButton onPress={onHandleLogin}>Login</CustomButton>
         <TouchableOpacity style={styles.linkContainer} onPress={onClick}>
           <Text style={styles.link}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.faceIDButton} onPress={handleFaceID}>
+          <Text style={styles.faceIDText}>Login with Passkey</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -82,6 +142,17 @@ const styles = StyleSheet.create({
   link: {
     color: "#1e90ff",
     textAlign: "center",
+    fontSize: 18,
+  },
+  faceIDButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#1e90ff",
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  faceIDText: {
+    color: "#ffffff",
     fontSize: 18,
   },
 });
