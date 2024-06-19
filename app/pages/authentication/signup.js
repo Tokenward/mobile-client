@@ -23,8 +23,7 @@ export default function RegisterScreen() {
   const handleSignUp = async () => {
     try {
       await signup(email, password);
-      Alert.alert('Success', 'You have successfully signed up!');
-      router.push('/vault');
+      router.push('../authentication');
     } catch (err) {
       console.error('Signup error:', err);
       Alert.alert('Signup error', 'An error occurred while signing up.');
