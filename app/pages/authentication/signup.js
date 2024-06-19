@@ -31,7 +31,7 @@ export default function RegisterScreen() {
   };
 
   const onClick = () => {
-    router.push('/pages/authentication/login');
+    router.push('/pages/authentication');
   };
 
   return (
