@@ -1,31 +1,26 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import React, { useContext } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import useThemeContext from "../lib/hooks/useThemeContext";
+import { TouchableOpacity } from "react-native";
 
 export default function Item({ icon, title, type, name, content }) {
-    return (
-        <View style={styles.container}>
-            {type === 'icon' && icon && <Image source={{ uri: icon }} style={styles.icon} />}
-            {type === 'folder' && <MaterialIcons name="folder" size={24} color="#fff" />}
-            {type === 'list' && <MaterialIcons name="key" size={24} color="#fff" />}
-            <View style={styles.textContainer}>
-                <Text style={styles.label}>{title}</Text>
-                {name && <Text style={styles.name}>{name}</Text>}
-                {content && <Text style={styles.content}>{content}</Text>}
-            </View>
+    const colors = useThemeContext();
 
-            <Link
-                href={{
-                    pathname: '../../pages/details',
-                    params: { icon, title, type, name, content },
-                }}
-                asChild
-            >
-                <TouchableOpacity>
-                    <MaterialIcons name="more-vert" size={24} color="#fff" style={styles.optionsIcon} />
-                </TouchableOpacity>
-            </Link>
+    console.log("Rendering Item:", { icon, title, type, name, content });
+
+    
+
+    return (
+        <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.onSurface }]}>
+            {type === 'tag' && <MaterialIcons name="tag" size={24} color={colors.icon} />}
+            {type === 'folder' && <MaterialIcons name="folder" size={24} color={colors.icon} />}
+            {type === 'password' && <MaterialIcons name="key" size={24} color={colors.icon} />}
+            <View style={styles.textContainer}>
+                <Text style={[styles.label, { color: colors.onSurface }]}>{title}</Text>
+                {name && <Text style={[styles.name, { color: colors.onSurface }]}>{name}</Text>}
+                {content && <Text style={[styles.content, { color: colors.onSurface }]}>{content}</Text>}
+            </View>
         </View>
     );
 }
@@ -35,9 +30,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: '#444',
         marginVertical: 8,
         borderRadius: 4,
+        borderWidth: 1,
     },
     icon: {
         width: 24,
@@ -46,7 +41,6 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 18,
-        color: '#fff',
     },
     textContainer: {
         flex: 1,
@@ -55,15 +49,10 @@ const styles = StyleSheet.create({
     },
     name: {
         fontSize: 16,
-        color: '#bbb',
         marginTop: 4,
     },
     content: {
         fontSize: 14,
-        color: '#aaa',
         marginTop: 2,
-    },
-    optionsIcon: {
-        marginLeft: 10,
     },
 });

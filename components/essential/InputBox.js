@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
-import CustomColors from "../CustomColors";
-import { getOsTheme } from "../lib/util/theme";
+import { ThemeContext } from "../../app/pages/_layout";
+import useThemeContext from "../../lib/hooks/useThemeContext";
 
 export default function InputBox({ label, hidden = false, value, onChangeText, keyboardType }) {
-    const theme = getOsTheme();
-    const colors = CustomColors[theme];
+    const colors = useThemeContext();
 
     return (
         <View style={styles.container}>
             <TextInput 
-                style={styles.input}
+                style={[
+                    styles.input, 
+                    { 
+                        color: colors.inputText, 
+                        backgroundColor: colors.inputBackground, 
+                        borderColor: colors.inputBorder 
+                    }
+                ]}
                 placeholder={label}
-                placeholderTextColor='#fff' 
+                placeholderTextColor={colors.inputText} 
                 secureTextEntry={hidden}
                 value={value}
                 onChangeText={onChangeText}

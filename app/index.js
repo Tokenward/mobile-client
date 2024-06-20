@@ -6,13 +6,13 @@
  * Date: [2024-06-14]
  */
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config/firebase";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 
 export default function HomeScreen() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const auth = getAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
@@ -28,11 +28,11 @@ export default function HomeScreen() {
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
-  }, [auth]);
+  }, []);
 
   if (isLoggedIn === null) {
     return null;
   }
 
-  return <Redirect href={isLoggedIn ? "/vault" : "/pages/authentication/"} />;
+  return <Redirect href={isLoggedIn ? "/vault" : "/pages/auth/"} />;
 }

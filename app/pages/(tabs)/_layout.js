@@ -1,65 +1,37 @@
-import { Slot, Tabs } from "expo-router";
-import { Text, View, TouchableOpacity, StatusBar, Alert, Modal, StyleSheet } from "react-native";
+import React, { useState, useContext } from "react";
+import { Tabs } from "expo-router";
+import { View, TouchableOpacity, StatusBar, Alert, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { router, useRouter } from "expo-router";
-import { useState } from "react";
+import { useRouter } from "expo-router";
+import useThemeContext from "../../../lib/hooks/useThemeContext";
 
 export default function TabsLayout() {
-
     const router = useRouter();
-    const [modalVisible, setModalVisible] = useState(false);
+    const colors = useThemeContext();
 
     const HeaderLeft = () => {
         return (
-            <>
-                <TouchableOpacity onPress={() => setModalVisible(true)} style={{marginLeft: 16}}>
-                    <Ionicons name="person-circle-outline" size={30} color="white" />
-                </TouchableOpacity>
-                <Modal
-                    transparent={true}
-                    animationType="slide"
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={styles.modalOverlay}>
-                        <View style={styles.modalContent}>
-                            <TouchableOpacity onPress={() => {
-                                Alert.alert("Add Account");
-                                setModalVisible(false);
-                            }}>
-                                <Text style={styles.menuItem}>Add Account</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
-                                Alert.alert("Logout");
-                                setModalVisible(false);
-                            }}>
-                                <Text style={styles.menuItem}>Logout</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                <Text style={styles.menuItem}>Cancel</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
-            </>
+            <TouchableOpacity style={{ marginLeft: 16 }}>
+                <Ionicons name="person-circle-outline" size={30} color={colors.onSurface} />
+            </TouchableOpacity>
         );
     };
 
     return (
         <>
-            <StatusBar backgroundColor="#1f1f1f" barStyle="light-content" />
+            <StatusBar backgroundColor={colors.background} barStyle={colors.barStyle} />
             <Tabs
                 screenOptions={{
                     tabBarStyle: {
-                        backgroundColor: '#1f1f1f',
+                        backgroundColor: colors.background,
                     },
                     headerStyle: {
-                        backgroundColor: '#1f1f1f',
+                        backgroundColor: colors.surface,
                     },
-                    headerTintColor: '#fff',
-                    tabBarActiveTintColor: '#fff',
-                    tabBarInactiveTintColor: '#888',
-                    headerLeft: () => <HeaderLeft />
+                    headerTintColor: colors.onSurface,
+                    tabBarActiveTintColor: colors.onBackground,
+                    tabBarInactiveTintColor: colors.onSurface,
+                    headerLeft: () => <HeaderLeft />,
                 }}
             >
                 <Tabs.Screen
@@ -85,7 +57,7 @@ export default function TabsLayout() {
                                     <Ionicons
                                         name="search-outline"
                                         size={24}
-                                        color="white"
+                                        color={colors.onSurface}
                                     />
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -96,7 +68,7 @@ export default function TabsLayout() {
                                     <Ionicons
                                         name="add-outline"
                                         size={24}
-                                        color="white"
+                                        color={colors.onSurface}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -126,18 +98,18 @@ export default function TabsLayout() {
                                     <Ionicons
                                         name="search-outline"
                                         size={24}
-                                        color="white"
+                                        color={colors.onSurface}
                                     />
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        router.push('../../pages/create');
+                                        router.push('../create');
                                     }}
                                 >
                                     <Ionicons
                                         name="add-outline"
                                         size={24}
-                                        color="white"
+                                        color={colors.onSurface}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -162,24 +134,3 @@ export default function TabsLayout() {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-    modalOverlay: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
-    },
-    modalContent: {
-        width: 250,
-        padding: 20,
-        backgroundColor: '#444',
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    menuItem: {
-        padding: 10,
-        fontSize: 18,
-        color: 'black',
-    },
-});

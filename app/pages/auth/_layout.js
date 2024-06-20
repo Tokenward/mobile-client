@@ -9,18 +9,23 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useColorScheme } from "react-native";
+import CustomColors from "../../../CustomColors";
+import useThemeContext from "../../../lib/hooks/useThemeContext";
 
 export default function Layout() {
+  const colors = useThemeContext();
+
   try {
     return (
       <>
-        <StatusBar style="light" backgroundColor="#eebe03" />
+        <StatusBar style="auto" backgroundColor={colors.background} />
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#eebe03",
+              backgroundColor: colors.primary,
             },
-            headerTintColor: "#000",
+            headerTintColor: colors.onPrimary,
             headerTitleStyle: {
               fontWeight: "bold",
             },

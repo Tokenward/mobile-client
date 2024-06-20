@@ -1,18 +1,8 @@
-/**
- * Project: Tokenward Mobile-Client
- * File: /components/ItemForm.js
- * Description: Form component for different item types.
- * Author: Mitja Kurath
- * Date: [2024-06-14]
- */
+import React from "react"
+import { View } from "react-native"
 
-// React/React-Native Imports
-import React from 'react';
-import { View } from 'react-native';
-
-// Custom Component Imports
-import InputBox from '../InputBox';
-import Dropdown from '../Dropdown';
+import InputBox from "./essential/InputBox"
+import Dropdown from "./essential/Dropdown"
 
 export default function ItemForm({
     type,
@@ -29,10 +19,10 @@ export default function ItemForm({
 }) {
     return (
         <View>
-            {(type === 'passwordToken' || type === 'folder' || type === 'tag') && (
+            {(type === 'password' || type === 'folder' || type === 'tag') && (
                 <InputBox label="Name" value={title} onChangeText={setTitle} />
             )}
-            {type === 'passwordToken' && (
+            {type === 'password' && (
                 <>
                     <InputBox label="Content" value={content} onChangeText={setContent} />
                     <Dropdown label="Select Tag" data={tags} onSelect={setSelectedTag} value={selectedTag} />

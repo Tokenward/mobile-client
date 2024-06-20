@@ -11,7 +11,13 @@ const CustomColors = {
         onSecondary: "#000000",
         onBackground: "#000000",
         onSurface: "#000000", 
-        onError: "#FFFFFF"
+        onError: "#FFFFFF",
+        inputBackground: "#FFF",
+        inputText: "#000",
+        inputBorder: "gray",
+        barStyle: "dark",
+        link: '#000',
+        icon: '#000',
     },
     dark: {
         primary: "#BB86FC", 
@@ -25,7 +31,13 @@ const CustomColors = {
         onSecondary: "#000000",
         onBackground: "#FFFFFF",
         onSurface: "#FFFFFF", 
-        onError: "#000000"
+        onError: "#000000",
+        inputBackground: "#444",
+        inputText: "#FFF",
+        inputBorder: "gray",
+        barStyle: "light",
+        link: '#2887F4',
+        icon: '#FFF',
     }
 };
 

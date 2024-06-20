@@ -6,21 +6,24 @@
  * Date: [2024-06-14]
  */
 
-import React from "react";
+import React, { useContext } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import useThemeContext from "../../../lib/hooks/useThemeContext";
 
 export default function Layout() {
+  const colors = useThemeContext();
+
   try {
     return (
       <>
-        <StatusBar style="light" backgroundColor="#eebe03" />
+        <StatusBar style={colors.barStyle} backgroundColor={colors.background} />
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#eebe03",
+              backgroundColor: colors.primary,
             },
-            headerTintColor: "#000",
+            headerTintColor: colors.onPrimary,
             headerTitleStyle: {
               fontWeight: "bold",
             },
