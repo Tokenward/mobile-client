@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../../../components/essential/InputBox';
 import CustomButton from '../../../../components/essential/CustomButton';
 import useThemeContext from '../../../../lib/hooks/useThemeContext';
+
 export default function SettingsScreen() {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -14,6 +15,7 @@ export default function SettingsScreen() {
 
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
+            <ScrollView>
             <View style={styles.container}>
                 <View style={[styles.settingContainer, { backgroundColor: colors.surface }]}>
                     <Text style={[styles.headerText, { color: colors.onSurface }]}>Change Password</Text>
@@ -28,22 +30,20 @@ export default function SettingsScreen() {
                     <CustomButton>Confirm new Email</CustomButton>
                 </View>
             </View>
+
+            </ScrollView>
+
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        padding: 30,
-    },
+
     headerText: {
         fontSize: 24,
         marginBottom: 16,
     },
-    container: {
-        margin: 16,
-    },
+
     settingContainer: {
         marginBottom: 16,
         padding: 16,

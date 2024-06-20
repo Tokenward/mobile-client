@@ -3,8 +3,6 @@ import { SafeAreaView, View, Text, StyleSheet, ScrollView, ActivityIndicator } f
 import { getVaultItems } from '../../../../lib/api/item';
 import Item from '../../../../components/Item';
 import useThemeContext from '../../../../lib/hooks/useThemeContext';
-import DetailsPopup from '../../../../components/DetailsPopup';
-import CustomButton from '../../../../components/essential/CustomButton';
 
 export default function VaultScreen() {
     const colors = useThemeContext();
@@ -107,7 +105,6 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 18,
-        marginVertical: 10,
     },
     loadingContainer: {
         flex: 1,

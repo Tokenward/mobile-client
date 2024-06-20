@@ -9,8 +9,6 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useColorScheme } from "react-native";
-import CustomColors from "../../../CustomColors";
 import useThemeContext from "../../../lib/hooks/useThemeContext";
 
 export default function Layout() {
