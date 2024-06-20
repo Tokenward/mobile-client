@@ -16,7 +16,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../config/firebase";
 import { login, saveDataLocally, getLocalData } from "../../../lib/api/user";
-import { ThemeContext } from "../_layout";
 import useThemeContext from "../../../lib/hooks/useThemeContext";
 
 export default function LoginScreen() {
