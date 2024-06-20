@@ -34,13 +34,7 @@ export default function VaultScreen() {
     const handleDelete = async (itemId, itemType) => {
         try {
             await deleteItem(itemId, itemType);
-            if (itemType === 'tag') {
-                setTags(tags.filter(tag => tag.id !== itemId));
-            } else if (itemType === 'folder') {
-                setFolders(folders.filter(folder => folder.id !== itemId));
-            } else if (itemType === 'passwordToken') {
-                setNoFolderItems(noFolderItems.filter(item => item.id !== itemId));
-            }
+
         } catch (error) {
             console.error("Error deleting item: ", error);
         }

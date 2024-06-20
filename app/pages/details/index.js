@@ -32,7 +32,6 @@ export default function DetailScreen() {
     const handleDelete = async () => {
         try {
             await deleteItem(id, type);
-            Alert.alert('Success', 'Item deleted successfully');
             navigation.goBack();
         } catch (error) {
             console.error("Error deleting item:", error);
