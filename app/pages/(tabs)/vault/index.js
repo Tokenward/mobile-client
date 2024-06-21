@@ -64,6 +64,7 @@ export default function VaultScreen() {
                         type="tag"
                         name={tag.item.name}
                         content={tag.item.content}
+                        id={tag.id}
                     />
                 ))}
                 <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Folders</Text>
@@ -75,6 +76,7 @@ export default function VaultScreen() {
                         type="folder"
                         name={folder.item.name}
                         content={folder.item.content}
+                        id={folder.id}
                     />
                 ))}
                 <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Unsorted Passwords/Tokens</Text>
@@ -86,6 +88,7 @@ export default function VaultScreen() {
                         type="password"
                         name={password.password.name}
                         content={password.password.content}
+                        id={password.password.id}
                     />
                 ))}
             </ScrollView>

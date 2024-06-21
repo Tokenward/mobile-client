@@ -4,14 +4,14 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import useThemeContext from '../lib/hooks/useThemeContext';
 import { Link } from 'expo-router';
 
-export default function Item({ icon, title, type, name, content }) {
+export default function Item({ icon, title, type, name, content, id }) {
   const colors = useThemeContext();
 
   console.log('Rendering Item:', { icon, title, type, name, content });
 
   return (
     <Link
-      href={`../details?name=${encodeURIComponent(title)}`}
+      href={`../details?name=${encodeURIComponent(title, type, id)}`}
       style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.onSurface }]}
     >
       {type === 'tag' && <MaterialIcons name="tag" size={24} color={colors.icon} />}
