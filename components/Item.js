@@ -14,9 +14,11 @@ export default function Item({ icon, title, type, name, content }) {
       href={`../details?name=${encodeURIComponent(title)}`}
       style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.onSurface }]}
     >
-      {type === 'tag' && <MaterialIcons name="tag" size={24} color={colors.icon} />}
-      {type === 'folder' && <MaterialIcons name="folder" size={24} color={colors.icon} />}
-      {type === 'password' && <MaterialIcons name="key" size={24} color={colors.icon} />}
+      <View style={styles.iconContainer}>
+        {type === 'tag' && <MaterialIcons name="local-offer" size={24} color={colors.primary} />}
+        {type === 'folder' && <MaterialIcons name="folder" size={24} color={colors.primary} />}
+        {type === 'password' && <MaterialIcons name="vpn-key" size={24} color={colors.primary} />}
+      </View>
       <View style={styles.textContainer}>
         <Text style={[styles.label, { color: colors.onSurface }]}>{title}</Text>
         {name && <Text style={[styles.name, { color: colors.onSurface }]}>{name}</Text>}
