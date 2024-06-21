@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, SafeAreaView, StatusBar, Text, TouchableOpacity, View, TextInput } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import useGoBack from "../../../lib/hooks/useGoBack";
 import { getVaultItems, saveNewItem } from "../../../lib/api/item";
+import { createTeam } from "../../../lib/api/team";
 import Dropdown from '../../../components/essential/Dropdown';
 import ItemForm from "../../../components/ItemForm";
 import CustomButton from "../../../components/essential/CustomButton";
@@ -22,27 +23,30 @@ export default function CreatePage() {
   const [folders, setFolders] = useState([]);
   const [selectedTag, setSelectedTag] = useState(null);
   const [selectedFolder, setSelectedFolder] = useState(null);
+  const [teamName, setTeamName] = useState('');
 
   const handleSave = async () => {
     try {
-        let newSelectedTagId = selectedTag?.value || null;
-        let newSelectedFolderId = selectedFolder?.value || null;
+      let newSelectedTagId = selectedTag?.value || null;
+      let newSelectedFolderId = selectedFolder?.value || null;
 
-        if (type === 'tag' && !selectedTag) {
-            const { selectedTagId: newTagId } = await saveNewItem(title, type, content);
-            newSelectedTagId = newTagId;
-        } else if (type === 'folder' && !selectedFolder) {
-            const { selectedFolderId: newFolderId } = await saveNewItem(title, type, content);
-            newSelectedFolderId = newFolderId;
-        } else {
-            await saveNewItem(title, type, content, newSelectedTagId, newSelectedFolderId);
-        }
+      if (type === 'tag' && !selectedTag) {
+        const { selectedTagId: newTagId } = await saveNewItem(title, type, content);
+        newSelectedTagId = newTagId;
+      } else if (type === 'folder' && !selectedFolder) {
+        const { selectedFolderId: newFolderId } = await saveNewItem(title, type, content);
+        newSelectedFolderId = newFolderId;
+      } else if (type === 'team') {
+        await createTeam(teamName);
+      } else {
+        await saveNewItem(title, type, content, newSelectedTagId, newSelectedFolderId);
+      }
 
-        goBack();
+      goBack();
     } catch (error) {
-        console.error("Error saving item:", error);
+      console.error("Error saving item:", error);
     }
-};
+  };
 
   useEffect(() => {
     const fetchTagsAndFolders = async () => {
@@ -51,11 +55,11 @@ export default function CreatePage() {
         const { tags, folders } = await getVaultItems();
         setTags(tags.map(tag => ({ label: tag.item.title, value: tag.id })));
         setFolders(folders.map(folder => ({ label: folder.item.title, value: folder.id })));
-        console.log("Tag Data: ", tags)
-        console.log("Folders Data: ", folders)
+        console.log("Tag Data: ", tags);
+        console.log("Folders Data: ", folders);
       }
     };
-    
+
     fetchTagsAndFolders();
   }, []);
 
@@ -63,6 +67,7 @@ export default function CreatePage() {
     { label: 'Tag', value: 'tag' },
     { label: 'Folder', value: 'folder' },
     { label: 'Password/Token', value: 'password' },
+    { label: 'Team', value: 'team' },
   ];
 
   try {
@@ -91,19 +96,30 @@ export default function CreatePage() {
             onSelect={(item) => setType(item.value)}
             value={itemTypes.find(item => item.value === type)}
           />
-          <ItemForm
-            type={type}
-            title={title}
-            content={content}
-            tags={tags}
-            folders={folders}
-            setTitle={setTitle}
-            setContent={setContent}
-            setSelectedTag={setSelectedTag}
-            setSelectedFolder={setSelectedFolder}
-            selectedTag={selectedTag}
-            selectedFolder={selectedFolder}
-          />
+          {type === 'team' ? (
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter team name"
+                value={teamName}
+                onChangeText={setTeamName}
+              />
+            </View>
+          ) : (
+            <ItemForm
+              type={type}
+              title={title}
+              content={content}
+              tags={tags}
+              folders={folders}
+              setTitle={setTitle}
+              setContent={setContent}
+              setSelectedTag={setSelectedTag}
+              setSelectedFolder={setSelectedFolder}
+              selectedTag={selectedTag}
+              selectedFolder={selectedFolder}
+            />
+          )}
           <CustomButton onPress={handleSave}>Save</CustomButton>
         </View>
       </SafeAreaView>
@@ -130,5 +146,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "Roboto",
     marginTop: 16,
+  },
+  inputContainer: {
+    marginTop: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    fontSize: 16,
   },
 });
