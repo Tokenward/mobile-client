@@ -4,6 +4,9 @@ import CustomButton from '../../../components/essential/CustomButton';
 import { useLocalSearchParams } from 'expo-router';
 import useThemeContext from '../../../lib/hooks/useThemeContext';
 import Stack from 'expo-router';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { ActivityIndicator } from 'react-native';
 
 export default function detailScreen() {
     const params = useLocalSearchParams();
@@ -11,6 +14,9 @@ export default function detailScreen() {
 
     const colors = useThemeContext();
 
+    const handleDelete = () => {
+        
+    }
 
     // Safely access the name parameter
     const name = params?.name ?? 'Unknown';
@@ -20,6 +26,13 @@ export default function detailScreen() {
 
             <Text style={styles.headerText}>{name}</Text>
 
+
+
+            <View style={styles.buttonContainer}>
+                <CustomButton onPress={handleDelete}>
+                    <Text>Go Back</Text>
+                </CustomButton>
+            </View>
             <View style={styles.buttonContainer}>
                 <CustomButton onPress={goBack}>
                     <Text>Go Back</Text>

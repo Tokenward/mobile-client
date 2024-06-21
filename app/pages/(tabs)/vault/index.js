@@ -52,6 +52,48 @@ export default function VaultScreen() {
     );
   }
 
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView style={styles.container}>
+                <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Tags</Text>
+                {tags.map(tag => (
+                    <Item
+                        key={tag.id}
+                        icon={tag.item.icon}
+                        title={tag.item.title}
+                        type="tag"
+                        name={tag.item.name}
+                        content={tag.item.content}
+                        id={tag.id}
+                    />
+                ))}
+                <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Folders</Text>
+                {folders.map(folder => (
+                    <Item
+                        key={folder.id}
+                        icon={folder.item.icon}
+                        title={folder.item.title}
+                        type="folder"
+                        name={folder.item.name}
+                        content={folder.item.content}
+                        id={folder.id}
+                    />
+                ))}
+                <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Unsorted Passwords/Tokens</Text>
+                {noFolderPasswords.map(password => (
+                    <Item
+                        key={password.id}
+                        icon={password.password.icon}
+                        title={password.password.title}
+                        type="password"
+                        name={password.password.name}
+                        content={password.password.content}
+                        id={password.password.id}
+                    />
+                ))}
+            </ScrollView>
+        </SafeAreaView>
+    );
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.container}>

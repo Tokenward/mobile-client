@@ -4,12 +4,12 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Link } from 'expo-router';
 import useThemeContext from '../lib/hooks/useThemeContext';
 
-export default function Item({ icon, title, type, name, content }) {
+export default function Item({ icon, title, type, name, content, id }) {
   const colors = useThemeContext();
 
   return (
     <Link
-      href={`../details?name=${encodeURIComponent(title)}`}
+      href={`../details?name=${encodeURIComponent(title, type, id)}`}
       style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.onSurface }]}
     >
       <View style={styles.iconContainer}>
