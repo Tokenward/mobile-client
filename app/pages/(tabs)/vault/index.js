@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, ScrollView, ActivityIndicator } f
 import { getVaultItems } from '../../../../lib/api/item';
 import Item from '../../../../components/Item';
 import useThemeContext from '../../../../lib/hooks/useThemeContext';
+import { FlatList } from 'react-native';
 
 export default function VaultScreen() {
     const colors = useThemeContext();
@@ -59,6 +60,10 @@ export default function VaultScreen() {
 
             <ScrollView style={styles.container}>
                 <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Tags</Text>
+
+                
+
+
                 {tags.map(tag => (
                     <Item
                         key={tag.id}
