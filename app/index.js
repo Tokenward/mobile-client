@@ -36,3 +36,4 @@ export default function HomeScreen() {
 
   return <Redirect href={isLoggedIn ? "/vault" : "/pages/auth/"} />;
 }
+
