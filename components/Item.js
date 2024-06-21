@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import useThemeContext from '../lib/hooks/useThemeContext';
 import { Link } from 'expo-router';
+import useThemeContext from '../lib/hooks/useThemeContext';
 
 export default function Item({ icon, title, type, name, content }) {
   const colors = useThemeContext();
-
-  console.log('Rendering Item:', { icon, title, type, name, content });
 
   return (
     <Link
@@ -20,9 +18,9 @@ export default function Item({ icon, title, type, name, content }) {
         {type === 'password' && <MaterialIcons name="vpn-key" size={24} color={colors.primary} />}
       </View>
       <View style={styles.textContainer}>
-        <Text style={[styles.label, { color: colors.onSurface }]}>{title}</Text>
-        {name && <Text style={[styles.name, { color: colors.onSurface }]}>{name}</Text>}
-        {content && <Text style={[styles.content, { color: colors.onSurface }]}>{content}</Text>}
+        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+        {name && <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{name}</Text>}
+        {content && <Text style={[styles.content, { color: colors.textSecondary }]}>{content}</Text>}
       </View>
     </Link>
   );
@@ -34,23 +32,38 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     marginVertical: 8,
-    borderRadius: 4,
+    borderRadius: 10,
     borderWidth: 1,
+    borderColor: 'transparent',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 3,
   },
-  label: {
-    fontSize: 18,
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+    backgroundColor: '#f0f0f0',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   textContainer: {
     flex: 1,
-    marginLeft: 10,
-    justifyContent: 'center',
   },
-  name: {
+  title: {
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 14,
     marginTop: 4,
   },
   content: {
-    fontSize: 14,
+    fontSize: 12,
+    color: '#666',
     marginTop: 2,
   },
 });
