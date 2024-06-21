@@ -15,11 +15,12 @@ export default function VaultScreen() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getVaultItems();
-                console.log("Fetched Data:", data);
-                setTags(data.tags);
-                setFolders(data.folders);
-                setNoFolderPasswords(data.noFolderPasswords);
+                const { tags, folders, noFolderPasswords } = await getVaultItems();
+                console.log("Fetched Data:", tags, folders, noFolderPasswords);
+                setTags(tags);
+                setFolders(folders);
+                const filteredPasswords = noFolderPasswords.filter(password => !password.password.selectedTagId && !password.password.selectedFolderId);
+                setNoFolderPasswords(filteredPasswords);
                 setLoading(false);
             } catch (error) {
                 console.error("Error while fetching user data: \n" + error);
@@ -51,16 +52,10 @@ export default function VaultScreen() {
         );
     }
 
-    
-
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView style={styles.container}>
                 <Text style={[styles.sectionTitle, { color: colors.onBackground }]}>Tags</Text>
-
-                
-
-
                 {tags.map(tag => (
                     <Item
                         key={tag.id}
