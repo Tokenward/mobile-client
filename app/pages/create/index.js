@@ -23,10 +23,26 @@ export default function CreatePage() {
   const [selectedTag, setSelectedTag] = useState(null);
   const [selectedFolder, setSelectedFolder] = useState(null);
 
-  const handleSave = () => {
-    saveNewItem(title, type, content, selectedTag, selectedFolder);
-    goBack();
-  }
+  const handleSave = async () => {
+    try {
+        let newSelectedTagId = selectedTag?.value || null;
+        let newSelectedFolderId = selectedFolder?.value || null;
+
+        if (type === 'tag' && !selectedTag) {
+            const { selectedTagId: newTagId } = await saveNewItem(title, type, content);
+            newSelectedTagId = newTagId;
+        } else if (type === 'folder' && !selectedFolder) {
+            const { selectedFolderId: newFolderId } = await saveNewItem(title, type, content);
+            newSelectedFolderId = newFolderId;
+        } else {
+            await saveNewItem(title, type, content, newSelectedTagId, newSelectedFolderId);
+        }
+
+        goBack();
+    } catch (error) {
+        console.error("Error saving item:", error);
+    }
+};
 
   useEffect(() => {
     const fetchTagsAndFolders = async () => {
@@ -51,7 +67,7 @@ export default function CreatePage() {
 
   try {
     return (
-      <SafeAreaView style={[styles.mainContainer, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]}>
         <StatusBar backgroundColor={colors.background} barStyle={colors.barStyle} />
         <Stack.Screen
           options={{
@@ -99,7 +115,7 @@ export default function CreatePage() {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  safeArea: {
     flex: 1,
     paddingTop: 20,
     paddingHorizontal: 20,
