@@ -9,7 +9,7 @@ export default function Item({ icon, title, type, name, content, id }) {
 
   return (
     <Link
-      href={`../details?name=${encodeURIComponent(title, type, id)}`}
+      href={`../details?name=${encodeURIComponent(title)}&type=${type}&id=${id}`}
       style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.onSurface }]}
     >
       <View style={styles.iconContainer}>
