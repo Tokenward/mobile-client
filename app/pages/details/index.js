@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator, Clipboard } from 'react-native';
 import useGoBack from '../../../lib/hooks/useGoBack';
 import CustomButton from '../../../components/essential/CustomButton';
 import { useLocalSearchParams } from 'expo-router';
 import useThemeContext from '../../../lib/hooks/useThemeContext';
 import { getVaultItems } from '../../../lib/api/item';
 import Item from '../../../components/Item';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Alert } from 'react-native';
+
 
 export default function detailScreen() {
   const params = useLocalSearchParams();
@@ -16,7 +19,7 @@ export default function detailScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { type, id, name } = params;
+  const { type, id, name, content } = params;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +45,12 @@ export default function detailScreen() {
     fetchData();
   }, [id, type]);
 
+  const copyToClipboard = () => {
+    Clipboard.setString(content);
+    Alert.alert("Copied to Clipboard", `The text "${content}" has been copied to your clipboard.`);
+  };
+  
+
   if (loading) {
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
@@ -65,6 +74,17 @@ export default function detailScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.headerText, { color: colors.text }]}>{name}</Text>
+      <Text>{content}</Text>
+
+      {type === 'password' && 
+      
+      <View style={{width: 40}}>
+        <CustomButton onPress={copyToClipboard}>
+        <MaterialIcons name="content-copy" size={24} color={"white"} />
+
+      </CustomButton>
+        </View>}
+
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {items.map(item => (
           <Item
@@ -111,6 +131,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   scrollContainer: {
-    paddingBottom: 16,
   },
 });

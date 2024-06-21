@@ -102,6 +102,8 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 16,
+    alignSelf: 'center',
+    flex: 1,
   },
   sectionTitle: {
     fontSize: 20,
@@ -116,4 +118,5 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 16,
   },
+
 });

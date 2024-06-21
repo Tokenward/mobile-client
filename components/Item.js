@@ -9,19 +9,20 @@ export default function Item({ icon, title, type, name, content, id }) {
 
   return (
     <Link
-      href={`../details?name=${encodeURIComponent(title)}&type=${type}&id=${id}`}
+      href={`../details?name=${encodeURIComponent(title)}&type=${type}&id=${id}&content=${content}`}
       style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.onSurface }]}
     >
-      <View style={styles.iconContainer}>
-        {type === 'tag' && <MaterialIcons name="local-offer" size={24} color={colors.primary} />}
-        {type === 'folder' && <MaterialIcons name="folder" size={24} color={colors.primary} />}
-        {type === 'password' && <MaterialIcons name="vpn-key" size={24} color={colors.primary} />}
-      </View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
-        {name && <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{name}</Text>}
-        {content && <Text style={[styles.content, { color: colors.textSecondary }]}>{content}</Text>}
-      </View>
+        <View style={styles.iconContainer}>
+          {type === 'tag' && <MaterialIcons name="local-offer" size={24} color={colors.primary} />}
+          {type === 'folder' && <MaterialIcons name="folder" size={24} color={colors.primary} />}
+          {type === 'password' && <MaterialIcons name="vpn-key" size={24} color={colors.primary} />}
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+          {name && <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{name}</Text>}
+          {content && <Text style={[styles.content, { color: colors.textSecondary }]}>{content}</Text>}
+        </View>
+
     </Link>
   );
 }
@@ -29,8 +30,7 @@ export default function Item({ icon, title, type, name, content, id }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
+    padding: 20,
     marginVertical: 8,
     borderRadius: 10,
     borderWidth: 1,
@@ -40,7 +40,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 3,
+    height: 75,
+    width: 350,
+
   },
+
   iconContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -49,12 +53,13 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    marginLeft: 20,
   },
   textContainer: {
-    flex: 1,
+    
   },
   title: {
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   subtitle: {
