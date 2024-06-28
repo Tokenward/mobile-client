@@ -170,7 +170,7 @@ export default function TabsLayout() {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        router.push('../create');
+                                        router.push('/pages/create');
                                     }}
                                 >
                                     <Ionicons
